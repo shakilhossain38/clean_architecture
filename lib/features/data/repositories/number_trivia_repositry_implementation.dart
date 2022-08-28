@@ -9,7 +9,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../core/network/network_info.dart';
 
-typedef Future<NumberTrivia> _concreteOrRandomChooser();
+typedef Future<NumberTriviaModel> _concreteOrRandomChooser();
 
 class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
   final NumberTriviaLocalDataSource? localDataSource;
@@ -38,13 +38,13 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
     });
   }
 
-  Future<Either<Failures, NumberTrivia>> _getTrivia(
+  Future<Either<Failures, NumberTriviaModel>> _getTrivia(
       _concreteOrRandomChooser getConcreteOrRandom) async {
     if (await networkInfo!.isConnected) {
       try {
-        final remoteTrivia = await remoteDataSource?.getRandomNumberTrivia();
-        localDataSource?.cachedNumberTrivia(remoteTrivia!);
-        return Right(remoteTrivia!);
+        final remoteTrivia = await getConcreteOrRandom();
+        localDataSource?.cachedNumberTrivia(remoteTrivia);
+        return Right(remoteTrivia);
       } on ServerExceptions {
         return Left(ServerFailure());
       }

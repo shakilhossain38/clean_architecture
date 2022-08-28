@@ -10,5 +10,5 @@ class NetworkInfoImp implements NetworkInfo {
 
   @override
   // TODO: implement isConnected
-  Future<bool> get isConnected => throw UnimplementedError();
+  Future<bool> get isConnected => connectionChecker.hasConnection;
 }

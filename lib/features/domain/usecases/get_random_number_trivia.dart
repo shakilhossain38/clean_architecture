@@ -6,7 +6,8 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
 class GetRandomNumberTrivia implements UseCase<NumberTrivia, NoParams> {
-  late final NumberTriviaRepository repository;
+  final NumberTriviaRepository repository;
+  GetRandomNumberTrivia(this.repository);
   @override
   Future<Either<Failures, NumberTrivia>> call(NoParams params) async {
     // TODO: implement call
